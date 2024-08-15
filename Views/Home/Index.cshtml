@@ -1,0 +1,93 @@
+﻿<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+
+    .sidebar {
+        width: 200px;
+        margin-top: 10px;
+        margin-left: 30px;
+        background-color: #ffffff;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+    .main-menu {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+        .main-menu > li {
+            padding: 10px;
+            cursor: pointer;
+            position: relative;
+        }
+
+            .main-menu > li:hover {
+                background-color: #0d6efd;
+                color: #fff;
+            }
+    .sidebar .main-menu #title-menu {
+        border-bottom: 1px ridge #ddd;
+        text-align: center;
+    }
+    .sub-menu {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        width: 150px;
+        background-color: #f4f4f4;
+        box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    }
+
+        .sub-menu li {
+            padding: 10px;
+            background-color: #fff;
+            width: 200px;
+        }
+
+            .sub-menu li:hover {
+                background-color: #e9e9e9;
+            }
+
+    .main-menu > li:hover .sub-menu {
+        display: block;
+    }
+    .sub-menu li a{
+        text-decoration: none;
+    }
+</style>
+
+@{
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+<div class="sidebar">
+    <ul class="main-menu">
+        <li id="title-menu">Danh sách chức năng</li>
+        @model List<DoAnKiSu_ThuVien.Models.PhanHe>
+        @foreach (var menu in Model)
+        {
+            <li>
+                @menu.TenPhanHe
+                <ul class="sub-menu">
+                    @foreach (var submenu in menu.ChucNangCons)
+                    {
+                        <li>
+                            <a href="@Url.Action(submenu.url, "ChucNangCon")">@submenu.TenChucNang</a>
+                        </li>
+
+                    }
+                </ul>
+            </li>
+        }
+    </ul>
+</div>
+
+
+

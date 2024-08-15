@@ -1,0 +1,40 @@
+﻿@model IEnumerable<DoAnKiSu_ThuVien.Context.LoaiSach>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.loai_sach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avatar)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.loai_sach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avatar)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_loai_sach }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_loai_sach }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_loai_sach })
+        </td>
+    </tr>
+}
+
+</table>

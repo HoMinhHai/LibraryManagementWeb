@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "QuanLyPhanQuyen";
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+
+<link href="~/Content/css/bootstrap.css" />
+<div style="background-color: #1877f1; height:60px;width: 100%;color: white; display: flex; align-items: center ;font-size: 20px; padding-left: 20px">
+    Danh sách người dùng
+</div>
+
+@model List<DoAnKiSu_ThuVien.Models.TaiKhoan_Nhom_NhanVien>
+<div style="float: right ;margin-top: 20px" class="input-group mb-3 col-4">
+    <input type="text" class="form-control" placeholder="Nhập tên nhân viên" aria-label="Nhập tên nhân viên" aria-describedby="basic-addon2">
+    <div class="input-group-append" >
+        <button class="btn btn-primary" type="button">Tìm kiếm</button>
+    </div>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th scope="col">Tên đăng nhập</th>
+            <th scope="col">Nhóm người dùng</th>
+            <th scope="col">Tên nhân viên</th>
+            <th scope="col">Trạng thái</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td><input type="checkbox" ; style="transform: scale(1.5);"/> </td>
+                <td>@item.tendn</td>
+                <td>@item.tennhom</td>
+                <td>@item.tennv</td>
+                <td>@item.trangthai</td>
+
+            </tr>
+        }
+
+    </tbody>
+</table>
+<div style="background-color: #888888; height: 50px; width: 100%; position: fixed; bottom: 0">
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("ThemNguoiDung", "ChucNangCon")'">Thêm</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("GroupManagement", "PhanQuyen")'">Quản lý nhóm</button>
+</div>

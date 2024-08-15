@@ -1,0 +1,77 @@
+﻿@model DoAnKiSu_ThuVien.Models.TaiLieu
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+    DoAnKiSu_ThuVien.Models.QuanLyThuVienEntities db = new DoAnKiSu_ThuVien.Models.QuanLyThuVienEntities();
+}
+
+<h2>Edit</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>TaiLieu</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID_TL)
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.TenTaiLieu, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.TenTaiLieu, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.TenTaiLieu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.KyHieuPhanLoai, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.KyHieuPhanLoai, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.KyHieuPhanLoai, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.LoaiTaiLieu, "LoaiTaiLieu", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" name="LoaiTaiLieu">
+                    @foreach (var loaitl in db.LoaiTaiLieux.ToList())
+                    {
+                        <option value="@loaitl.ID_Loai">@loaitl.TenLoai</option>
+                    }
+
+
+                </select>
+                @Html.ValidationMessageFor(model => model.LoaiTaiLieu, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.ChuDe, "ChuDe", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <select class="form-control" name="ChuDe">
+                    @foreach (var chude in db.ChuDes.ToList())
+                    {
+                        <option value="@chude.ID_ChuDe">@chude.TenChuDe</option>
+                    }
+
+
+                </select>
+                @Html.ValidationMessageFor(model => model.ChuDe, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

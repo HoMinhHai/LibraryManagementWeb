@@ -1,0 +1,100 @@
+﻿@model IEnumerable<DoAnKiSu_ThuVien.Context.Sach>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ten_sach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ngay_nhap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tom_tat)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.trang_thai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.so_luong_con)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.avatar)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiSach.loai_sach)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgonNgu.ten_ngon_ngu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NXB.ten_NXB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TacGia.ten_tac_gia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ViTri.khu)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ten_sach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ngay_nhap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tom_tat)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.trang_thai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.so_luong_con)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.avatar)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiSach.loai_sach)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgonNgu.ten_ngon_ngu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NXB.ten_NXB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TacGia.ten_tac_gia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ViTri.khu)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.id_sach }) |
+            @Html.ActionLink("Detail", "Detail", new { id = item.id_sach }) |
+            <a href="#" onclick="if (confirm('Bạn có chắc chắn muốn xóa không?') == true) { location.href = '/Product/Delete?id=@item.id_sach' }">Delete</a>
+        </td>
+    </tr>
+}
+
+</table>

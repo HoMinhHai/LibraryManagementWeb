@@ -1,0 +1,58 @@
+﻿@model IEnumerable<DoAnKiSu_ThuVien.Context.ThongKe>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ten_thong_ke)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ngay_thong_ke)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.so_luong)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NhanVien.ten_nhan_vien)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Sach.ten_sach)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ten_thong_ke)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ngay_thong_ke)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.so_luong)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NhanVien.ten_nhan_vien)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Sach.ten_sach)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_thong_ke }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_thong_ke }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_thong_ke })
+        </td>
+    </tr>
+}
+
+</table>

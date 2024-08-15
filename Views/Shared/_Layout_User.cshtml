@@ -1,0 +1,419 @@
+﻿
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=604800" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        Thư viện Trường Đại Học Y khoa Phạm Ngọc Thạch
+    </title>
+    <!--icon -->
+    <link rel="icon" sizes="16x16" href="~/Content/images/icons/logo_PNT.svg" type="image/png">
+    <link rel="icon" sizes="32x32" href="~/Content/images/icons/logo_PNT.svg" type="image/png">
+    <link rel="icon" sizes="48x48" href="~/Content/images/icons/logo_PNT.svg" type="image/png">
+    <link rel="icon" sizes="64x64" href="~/Content/images/icons/logo_PNT.svg" type="image/png">
+    <link rel="icon" sizes="128x128" href="~/Content/images/icons/logo_PNT.svg" type="image/png">
+    <!-- Favicon mặc định -->
+    <link rel="icon" href="~/Content/images/icons/logo_PNT.svg" type="image/x-icon">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/images/icons/logo_PNT.svg">
+    <!-- -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <!-- Bootstrap4 files-->
+    <script src="~/Scripts/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- Font awesome 5 -->
+    <link href="~/fonts/fontawesome/css/all.min.css" rel="stylesheet">
+    <!-- custom style -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" type="text/css" />
+    <!-- custom javascript -->
+    <script src="~/Scripts/script.js" type="text/javascript"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: nunito-sans, sans-serif, Helvetica, Arial !important;
+            font-size: 15px !important;
+        }
+
+        .header-account {
+            position: relative;
+        }
+
+        .drop-account {
+            width: 130px;
+            position: absolute;
+            top: 90%;
+            display: block;
+            right: 0;
+            background: #fff;
+            text-align: center;
+            z-index: 999;
+            -webkit-box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.33);
+            -moz-box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.33);
+            box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.33);
+            transition-duration: 0s;
+            transition-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .header-account:hover .drop-account,
+        .header-account:focus-within .drop-account {
+            display: block;
+            opacity: 1;
+        }
+
+        .drop-account ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+        
+        
+        .drop-account ul li {
+            margin-left: 15px;
+            border-top: 1px solid #f2f4f5;
+        }
+
+        .navbar {
+            background-color: #f6f7f9;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            border: none;
+            padding-top: 0;
+            padding-bottom: 0;
+            position: relative;
+            
+        }
+
+            .navbar ul {
+                height: 100%;
+                align-items: center;
+            }
+
+        .navbar-default .navbar-nav > li > a {
+            padding: 15px 15px;
+            outline: none;
+            color: black;
+            font-weight: bold;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .navbar-nav > li > .dropdown-menu {
+          
+            position: absolute;
+            display: none;
+            left: 14px;
+            top: 50px;
+        }
+        .dropdown-menu ul {
+            z-index: 3;
+            border-bottom: 1px solid #e6e6e6;
+            line-height: 25px;
+            padding-top: 0;
+        }
+        .dropdown-menu ul li{
+            width: 200px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            color: #fff;
+            background-color: #007aff;
+        }
+
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+          
+            background-color: #000;
+        }
+
+        .dropdown-menu > li > a:hover {
+            color: #c9c3c3;
+            text-decoration: none;
+            background-color: #121212;
+        }
+
+        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+         
+            background-color: #d71919;
+        }
+
+        .dropdown-menu > li > a {
+           
+        }
+
+
+        .navbar-default .navbar-nav > li > a {
+           
+            outline: none;
+            overflow: hidden;
+        }
+
+        .navbar ul li {
+            position: relative;
+        }
+
+            .navbar ul li a {
+                margin-left: 15px;
+            }
+
+        .navbar-nav .open .dropdown-menu {
+            position: absolute;
+            width: auto;
+            margin-top: 0;
+            background-color: transparent;
+            border: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .dropdown-menu ul {
+            list-style-type: none;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 0px;
+            height: 100%;
+        }
+
+            .dropdown-menu ul li {
+                border-bottom: 1px ridge #ddd;
+            }
+
+                .dropdown-menu ul li:hover {
+                    background-color: #3b71ca;
+                    color: white;
+                    cursor: pointer;
+                }
+
+        .navbar-nav .open .dropdown-menu > li:hover a {
+            background-color: transparent;
+            margin-left: 18px;
+            color: #fff !important;
+        }
+
+        .navbar-nav .open .dropdown-menu > li:hover:before {
+            font: normal normal normal 14px/1 FontAwesome;
+            content: '\f054';
+            width: 10px;
+            height: 10px;
+            transform: translate(-50%,-50%);
+            color: #e14444;
+        }
+
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+            color: #e14444;
+        }
+
+        .search-bar {
+            margin-bottom: 10px;
+        }
+
+        .section-header .header-main .drop-account ul {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            .section-header .header-main .drop-account ul li {
+                margin-left: 10px;
+            }
+
+                .section-header .header-main .drop-account ul li :hover {
+                    background-color: #3b71ca;
+                    color: white;
+                    cursor: pointer;
+                }
+
+        .drop-account ul li a {
+            display: block;
+            width: 100%;
+        }
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: -300px; /* Bắt đầu ẩn ngoài màn hình */
+            z-index: 9999;
+            padding: 20px;
+            background-color: #f44336; /* Màu nền của thông báo */
+            color: white;
+            transition: right 0.5s ease-in-out; /* Hiệu ứng khi thay đổi vị trí */
+        }
+
+            .alert.show {
+                right: 20px; /* Hiển thị từ góc phải bên trên */
+            }
+
+        .alert-primary {
+            background-color: #007aff;
+            color: #fff;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="section-header mx-3">
+        <section class="header-main border-bottom">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-11">
+                        <a href="~/home" class="brand-wrap">
+                            <img src="~/Content/images/logo_pnt.png" style="height:128px; width: 900px" />
+                        </a>
+                    </div>
+                    <div class="col-1">
+                        @if (Session["ReaderID"] != null)
+                        {
+                            <div class="header-account">
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="mx-auto" style="background:url(../../Content/images/icons/account.svg) ;width: 24px; height: 24px"></div>
+                                    <span style="color: #7A7E7F;font-size: 12px">@ViewBag.ReaderName</span>
+                                </div>
+                                <div style="width: 200px" class="drop-account">
+                                    <ul>
+                                        <li> <a href="/account/login">Thông tin tài khoản </a></li>
+                                        <li> <a href="/account/register">Đổi mật khẩu</a></li>
+                                        <li> <a href="@Url.Action("Logout", "System")">Đăng xuất</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+
+
+                        }
+                        else
+                        {
+                            <div class="d-flex flex-row align-items-center">
+                                <a href="@Url.Action("Login","Home")">
+                                    <div class="mx-auto" style="background:url(../../Content/images/icons/account.svg) ;width: 24px; height: 24px"></div>
+                                    <span class="mx-auto">Đăng nhập</span>
+                                </a>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header> <!-- section-header.// -->
+    <div class="container">
+        <div class="d-flex justify-content-start navbar navbar-default">
+            <ul class="nav navbar-nav d-flex flex-row">
+                <li><a href="#0">GIỚI THIỆU</a></li>
+                <li><a href="#0">DỊCH VỤ</a></li>
+                <li class="dropdown">
+                    <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">TÀI NGUYÊN
+                        <i class="fa fa-angle-down" aria-hidden = "true"></i>
+                    </a>
+                    <div class="dropdown-menu" id="dropdon-menu">
+                        <ul>
+                            <li><a>Lưu hành tài liệu</a></li>
+                            <li><a>Mượn liên thư viện</a></li>
+                            <li><a>Dịch vụ tham khảo</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="dropdown">
+                    <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">HƯỚNG DẪN
+                        <i class="fa fa-angle-down" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu" id="dropdon-menu">
+                        <ul>
+                            <li><a>Tài liệu in (giấy)</a></li>
+                            <li><a>Tài nguyên điện tử</a></li>
+                            <li><a>Thư viện số</a></li>
+                            <li><a>Tài liệu môn học</a></li>
+                            <li><a>Tài nguyên nội sinh</a></li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+   
+
+
+ 
+    <div class="container search-bar">
+           <form action="/TaiLieu/Search" method="post">
+            <div class="input-group w-100 row">
+                <select name="category" id="category" class="custom-select border-right col-2" >
+                    <option value="Tiêu đề">Tìm theo tiêu đề</option>
+                    <option value="Chủ đề">Chủ đề</option>
+                    <option value="Tác giả">Tác giả</option>
+                    <option value="Năm xuất bản">Năm xuất bản</option>
+                    <option value="Nhà xuất bản">Nhà xuất bản</option>
+                </select>
+                <input name="SearchString" required type="text" id ="searchString" class="form-control" placeholder="Nhập nội dung tìm kiếm ">
+
+                <div class="input-group-append">
+                    <button onclick="searchDocument()" class="btn btn-primary" >
+                        <i class="fa fa-search"></i> Tìm kiếm
+                    </button>
+                </div>
+            </div>
+        </form>
+        @RenderBody()
+    </div> <!-- col.// -->
+    <footer style="height: 300px; margin-top: 20px; padding: 35px 30px 35px 30px; background-color: #00853c;">
+        <div class="d-flex align-items-center justify-content-around" style="width: 100%; height: 100%; color: #fff; font-size: 20px">
+            <div>
+                <p> THÔNG TIN LIÊN HỆ</p> 
+                <p>Trụ sở chính: Số 2 Dương Quang Trung, phường 12, quận 10, Thành phố Hồ Chí Minh</p>  
+                <p>
+                    028.38631044
+                </p> 
+                <p>
+                    thuvien@pnt.edu.vn
+                </p>
+               
+                <p>Facebook</p>
+            </div>
+            <div>
+               <p>GIỜ MỞ CỬA</p> 
+               <p>Các phòng phục vụ Thứ 2 - Thứ 6</p>
+               <p>
+                   (Nghỉ T7,CN & Ngày lễ)
+               </p>
+               <p>Phòng Đọc: 07g30 - 17g00</p>
+               <p>Phòng tra cứu tư liệu số: 07g30 - 17g00</p>
+                
+            </div>
+        </div>
+        
+    </footer>
+   <script>
+      
+       function showMessage(content) {
+           const alertDiv = document.createElement('div');
+           alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+           alertDiv.setAttribute('role', 'alert');
+           alertDiv.innerText = content;
+           var resultDiv = document.querySelector('.section-header');
+           resultDiv.appendChild(alertDiv);
+
+           // Tự đóng thông báo sau 3 giây
+           setTimeout(function () {
+               alertDiv.classList.remove('show');
+               setTimeout(function () {
+                   resultDiv.removeChild(alertDiv);
+               }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+           }, 3000);
+       }
+   </script>
+</body>
+</html>

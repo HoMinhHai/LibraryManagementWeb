@@ -1,0 +1,62 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alert with Animation</title>
+    <style>
+        /* CSS cho hộp thông báo */
+        .alert-box {
+            position: fixed;
+            top: 20px;
+            right: -300px; /* Bắt đầu ngoài màn hình */
+            width: 250px;
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: right 0.5s, opacity 0.5s; /* Hiệu ứng di chuyển và mờ dần */
+        }
+
+            /* Khi hộp thông báo xuất hiện */
+            .alert-box.show {
+                right: 20px; /* Đưa hộp vào màn hình */
+            }
+
+            /* Khi hộp thông báo đóng */
+            .alert-box.hide {
+                right: -300px; /* Đưa hộp ra khỏi màn hình */
+                opacity: 0; /* Mờ dần */
+            }
+    </style>
+    <script>
+        function showAlert(message) {
+            // Tạo một div để chứa thông báo
+            var alertBox = document.createElement("div");
+            alertBox.innerHTML = message;
+            alertBox.className = "alert-box";
+
+            // Thêm alertBox vào body của trang
+            document.body.appendChild(alertBox);
+
+            // Thêm lớp show để kích hoạt hiệu ứng xuất hiện
+            setTimeout(function() {
+                alertBox.classList.add("show");
+            }, 100); // Thêm một chút trễ để chắc chắn rằng lớp được thêm sau khi DOM cập nhật
+
+            // Đặt thời gian để tự động đóng thông báo sau 3 giây
+            setTimeout(function() {
+                alertBox.classList.remove("show");
+                alertBox.classList.add("hide");
+                setTimeout(function() {
+                    document.body.removeChild(alertBox);
+                }, 500); // Đợi cho đến khi hiệu ứng đóng hoàn thành
+            }, 3000);
+        }
+    </script>
+</head>
+<body>
+    <!-- Không có nội dung HTML ở đây vì chúng ta sẽ sử dụng hộp thông báo từ trang khác -->
+</body>
+</html>

@@ -1,0 +1,39 @@
+﻿@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/Content/css/Login.css" />
+<link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <div class='background_login'>
+        <div class='parents col-sm-6 col-md-6 col-lg-8 col-xl-8'>
+            <div class="container_login">
+                <div class='title'>ĐĂNG NHẬP HỆ THỐNG</div>
+
+                <form action="@Url.Action("ProcessLogin", "Home")" method="post">
+                    <!-- Chỉnh sửa action và controller tương ứng -->
+                    <input class='form-control' type="text" placeholder="Tên đăng nhập" name="uname" maxlength="200" required />
+                    <div class="password-wrapper">
+                        <input type="password" placeholder="Nhập mật khẩu" name="psw" required />
+                        <span class='Hide'></span>
+                    </div>
+                    <div class='error'>
+                        @if (ViewBag.Error != null)
+                        {
+                            <p style="color:red;">@ViewBag.Error</p>
+                        }
+                    </div>
+                    <div class='error'></div>
+                    <button type="submit">Đăng nhập</button>
+                    <label>
+                        <input type="checkbox" name="remember" /> Ghi nhớ mật khẩu
+                    </label>
+                </form>
+                <div class="register">
+                    <a href="@Url.Action("Register","Home")">Đăng ký mở thẻ</a>
+                </div>
+                <div class="forgot_psw">
+                    <a href="#">Quên mật khẩu ?</a>
+                </div>
+               
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,397 @@
+﻿<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="pragma" content="no-cache" />
+    <meta http-equiv="cache-control" content="max-age=604800" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Website title - bootstrap html template</title>
+    <link href="~/Content/images/favicon.ico" rel="shortcut icon" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--icon -->
+    <link rel="icon" sizes="16x16" href="~/Content/images/icons/favicon.ico" type="image/png">
+    <link rel="icon" sizes="32x32" href="~/Content/images/icons/favicon.ico" type="image/png">
+    <link rel="icon" sizes="48x48" href="~/Content/images/icons/favicon.ico" type="image/png">
+    <link rel="icon" sizes="64x64" href="~/Content/images/icons/favicon.ico" type="image/png">
+    <link rel="icon" sizes="128x128" href="~/Content/images/icons/favicon.ico" type="image/png">
+    <!-- Favicon mặc định -->
+    <link rel="icon" href="~/Content/images/icons/favicon.ico" type="image/x-icon">
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" sizes="180x180" href="~/Content/images/icons/favicon.ico">
+    <!-- -->
+    <!-- jQuery -->
+    <script src="~/Scripts/jquery-3.7.1.js"></script>
+    <!-- Bootstrap4 files-->
+    <script src="~/Scripts/bootstrap.bundle.min.js" type="text/javascript"></script>
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- Font awesome 5 -->
+    <link href="~/fonts/fontawesome/css/all.min.css" rel="stylesheet">
+    <!-- custom style -->
+    <link href="~/Content/css/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/css/ui.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/css/responsive.css" rel="stylesheet" type="text/css" />
+    <!-- custom javascript -->
+    <script src="~/Scripts/script.js" type="text/javascript"></script>
+    <style>
+        body {
+            font-family: nunito-sans, sans-serif, Helvetica, Arial;
+            font-size: 15px;
+        }
+
+        .header-account {
+            position: relative;
+        }
+
+        .drop-account {
+            width: 130px;
+            position: absolute;
+            top: 90%;
+            display: block;
+            right: 0;
+            background: #fff;
+            text-align: center;
+            z-index: 999;
+            -webkit-box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.33);
+            -moz-box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.33);
+            box-shadow: 0px 2px 6px 0px rgba(50, 50, 50, 0.33);
+            transition-duration: 0s;
+            transition-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .header-account:hover .drop-account,
+        .header-account:focus-within .drop-account {
+            display: block;
+            opacity: 1;
+        }
+
+        .drop-account ul {
+            list-style-type: none;
+            padding: 0;
+            text-align: left;
+        }
+
+            .drop-account ul li {
+                margin-left: 15px;
+                border-top: 1px solid #f2f4f5;
+            }
+
+        .navbar {
+            background-color: #222;
+            margin-bottom: 10px;
+            margin-top: 10px;
+            position: relative;
+            border: 1px solid grey;
+            box-shadow: 1px 1px 5px rgba(0,0,0,.5);
+        }
+
+        .navbar-default .navbar-nav > li > a {
+            color: #fff;
+            padding: 15px 15px;
+            outline: none;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .navbar-nav > li > .dropdown-menu {
+            border-radius: 6px;
+            position: absolute;
+            display: none;
+            left: 13px;
+            top: 30px;
+        }
+
+        .navbar-default .navbar-nav > li > a:hover {
+            color: #121212;
+            background-color: #fff;
+        }
+
+        .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:focus, .navbar-default .navbar-nav > .open > a:hover {
+            color: #fff;
+            background-color: #000;
+        }
+
+        .dropdown-menu > li > a:hover {
+            color: #c9c3c3;
+            text-decoration: none;
+            background-color: #121212;
+        }
+
+        .navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:focus, .navbar-default .navbar-nav > .active > a:hover {
+            color: #fff;
+            background-color: #d71919;
+        }
+
+        .dropdown-menu > li > a {
+            color: #000;
+        }
+
+
+        .navbar-default .navbar-nav > li > a {
+            color: #fff;
+            outline: none;
+            overflow: hidden;
+        }
+
+        .navbar ul li {
+            position: relative;
+        }
+
+            .navbar ul li a {
+                margin-left: 15px;
+            }
+
+        .navbar-nav .open .dropdown-menu {
+            position: absolute;
+            width: auto;
+            margin-top: 0;
+            background-color: transparent;
+            border: 0;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+        }
+
+        .dropdown-menu ul {
+            list-style-type: none;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-left: 0px;
+            height: 100%;
+        }
+
+            .dropdown-menu ul li {
+                border-bottom: 0.4px solid gray;
+            }
+
+                .dropdown-menu ul li:hover {
+                    background-color: #3b71ca;
+                    color: white;
+                    cursor: pointer;
+                }
+
+        .navbar-nav .open .dropdown-menu > li:hover a {
+            background-color: transparent;
+            margin-left: 18px;
+            color: #fff !important;
+        }
+
+        .navbar-nav .open .dropdown-menu > li:hover:before {
+            font: normal normal normal 14px/1 FontAwesome;
+            content: '\f054';
+            width: 10px;
+            height: 10px;
+            transform: translate(-50%,-50%);
+            color: #e14444;
+        }
+
+
+        .navbar-default .navbar-nav .open .dropdown-menu > li > a {
+            color: #e14444;
+        }
+
+        .search-bar {
+            margin-bottom: 10px;
+        }
+
+        .section-header .header-main .drop-account ul {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+            .section-header .header-main .drop-account ul li {
+                margin-left: 10px;
+            }
+
+                .section-header .header-main .drop-account ul li :hover {
+                    background-color: #3b71ca;
+                    color: white;
+                    cursor: pointer;
+                }
+
+        .drop-account ul li a {
+            display: block;
+            width: 100%;
+        }
+
+        footer {
+            margin-top: 50px;
+        }
+
+        .info_book {
+            width: 500px;
+        }
+
+        .container .info_book .title {
+            font-size: 20px;
+        }
+
+        .detail {
+            background-color: white;
+            margin-top: 20px;
+        }
+
+        .container .text-blue {
+            color: #1091d3
+        }
+    </style>
+</head>
+@{ 
+    Layout = null;
+}
+<body>
+    <header class="section-header mx-3">
+        <section class="header-main border-bottom">
+            <div class="container">
+                <div class="row align-items-center justify-content-between">
+                    <div class="col-11">
+                        <a href="~/home" class="brand-wrap">
+                            <img src="~/Content/images/logo_pnt.png" style="height:128px; width: 900px" />
+                        </a>
+                    </div>
+                    <div class="col-1">
+                       
+                            <div class="d-flex flex-row align-items-center">
+                                <a href="@Url.Action("Login","Home")">
+                                    <div class="mx-auto" style="background:url(../../Content/images/icons/account.svg) ;width: 24px; height: 24px"></div>
+                                    <span class="mx-auto">Đăng nhập</span>
+                                </a>
+                            </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </section>
+    </header> <!-- section-header.// -->
+    <nav class="d-flex navbar navbar-default container">
+        <ul class="nav navbar-nav d-flex flex-row">
+            <li><a href="#0">GIỚI THIỆU</a></li>
+            <li><a href="#0">DỊCH VỤ</a></li>
+            <li class="dropdown">
+                <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">TÀI NGUYÊN<span class="caret"></span></a>
+                <div class="dropdown-menu" id="dropdon-menu">
+                    <ul>
+                        <li><a>Lưu hành tài liệu</a></li>
+                        <li><a>Mượn liên thư viện</a></li>
+                        <li><a>Dịch vụ tham khảo</a></li>
+                    </ul>
+                </div>
+            </li>
+            <li class="dropdown">
+                <a href="#0" class="dropdown-toggle" data-toggle="dropdown" data-target="dropdown" role="button" aria-haspopup="true" aria-expanded="false">HƯỚNG DẪN<span class="caret"></span></a>
+                <div class="dropdown-menu" id="dropdon-menu">
+                    <ul>
+                        <li><a>Tài liệu in (giấy)</a></li>
+                        <li><a>Tài nguyên điện tử</a></li>
+                        <li><a>Thư viện số</a></li>
+                        <li><a>Tài liệu môn học</a></li>
+                        <li><a>Tài nguyên nội sinh</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+
+    @model DoAnKiSu_ThuVien.Models.ThongTinTaiLieuTimKiem
+
+    <div class="container detail">
+        <div class="d-flex justify-content-lg-start">
+            <img style="width: 164px; height: 235px; border: 1px solid #fff; margin-right: 200px" src="@(Url.Content("~/Content/images/books/") + Model.anhBia)" alt="Ảnh bìa" />
+            <div class="info_book">
+                <p class="text-blue title">@Model.tenTL</p>
+                <p>@Model.loaiTL</p>
+                <div class="d-flex justify-content-between">
+                    <p>Tác giả: </p>
+                    <div>
+                        @foreach (String tg in Model.dsTacGia)
+                        {
+                            <span class="text-blue">@tg</span>
+                        }
+                    </div>
+
+
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Xuất bản: </p>
+                    <div class="d-flex text-blue">
+                        <span>@(Model.tenNXB + " , " )</span>
+                        <span>@Model.namXuatBan</span>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Mô tả vât lý:</p>
+                    <div class="d-flex text-blue">
+                        <span>@(Model.soTrang + " tr, ")</span>
+                        <span>@(Model.chieuCao + " cm")</span>
+                    </div>
+
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Chủ đề:</p>
+                    <p class="text-blue">@Model.chuDe</p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <p>Ký hiệu phân loại:</p>
+                    <p class="text-blue">@Model.kyHieuPhanLoai</p>
+                </div>
+
+            </div>
+        </div>
+        <div>
+            <h5> Thông tin lưu thông</h5>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Mã ĐKCB</th>
+                        <th scope="col">Tình trạng</th>
+                        <th scope="col">Tầng</th>
+                        <th scope="col">Số kệ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.dsBanSao)
+                    {
+                        <tr>
+
+                            <td>@item.MaDangKyCaBiet</td>
+                            <td>@item.TinhTrang</td>
+                            <td>@("Tầng " + item.KeSach.Tang)</td>
+                            <td>@("Kệ sách " + item.KeSach.MaKe)</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer style="height: 300px; margin-top: 20px; padding: 35px 30px 35px 30px; background-color: #00853c;">
+        <div class="d-flex align-items-center justify-content-around" style="width: 100%; height: 100%; color: #fff; font-size: 20px">
+            <div>
+                <p> THÔNG TIN LIÊN HỆ</p>
+                <p>Trụ sở chính: Số 2 Dương Quang Trung, phường 12, quận 10, Thành phố Hồ Chí Minh</p>
+                <p>
+                    028.38631044
+                </p>
+                <p>
+                    thuvien@pnt.edu.vn
+                </p>
+
+                <p>Facebook</p>
+            </div>
+            <div>
+                <p>GIỜ MỞ CỬA</p>
+                <p>Các phòng phục vụ Thứ 2 - Thứ 6</p>
+                <p>
+                    (Nghỉ T7,CN & Ngày lễ)
+                </p>
+                <p>Phòng Đọc: 07g30 - 17g00</p>
+                <p>Phòng tra cứu tư liệu số: 07g30 - 17g00</p>
+
+            </div>
+        </div>
+
+    </footer>
+</body>
+</html>

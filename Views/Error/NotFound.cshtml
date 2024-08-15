@@ -1,0 +1,82 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout_User.cshtml";
+}
+<style>
+    .page-err{
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+
+        align-items: center;
+        padding-top: 50px;
+        padding-bottom: 50px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .page-err img{
+        width: 320px;
+        height: 370px;
+        margin-right: 30px;
+    }
+    .desc-error-container{
+        padding-top: 120px;
+        width: 50%;
+    }
+        .desc-error-container .title-error {
+            font-size: 40px;
+            font-family: 'Nunito Sans' !important;
+            font-weight: bold;
+            text-transform: none !important;
+            line-height: 36px;
+            color: #212121 !important;
+        }
+    .desc-error {
+        font-size: 18px;
+        font-family: 'Nunito Sans' !important;
+        font-weight: bold;
+        text-transform: none !important;
+        margin-bottom: 0px !important;
+        color: #212121 !important;
+    }
+    .error-code {
+        font-size: 16px;
+        font-family: 'Nunito Sans' !important;
+        text-transform: none !important;
+        line-height: 24px;
+        color: #616161 !important;
+    }
+    .btn-back-home span {
+        display: inline-block;
+        font-family: 'Nunito Sans' !important;
+        background-color: #C92127;
+        color: white;
+        text-align: center;
+        padding: 10px 20px;
+        border-radius: 5px;
+        text-decoration: none;
+        cursor: pointer;
+        line-height: normal;
+        width: 100%;
+    }
+</style>
+<div col-lg-9 col-md-9 col-sm-12 col-xs-12>
+    <div class="page-err">
+        <div>
+            <img class="image-error" src="~/Content/images/404_web_image.png" />
+        </div>
+        <div class="desc-error-container">
+            <p class="title-error">Oops!</p>
+            </br>
+            <p class="desc-error">Rất tiếc, chúng tôi không thể tìm thấy những gì bạn đang tìm kiếm.</p>
+            </br>
+            <p class="error-code">Error code: 404</p>
+            </br>
+            <a class="btn-back-home" href="@Url.Action("HomePage", "Home")">
+                <span>Quay lại trang chủ</span>
+            </a>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,347 @@
+﻿<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+
+<style>
+    .frame-ip {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+
+    .download-box {
+        width: 320px;
+        height: 100px;
+        margin-top: 50px;
+        background-color: #f5f6fa;
+        padding-left: 20px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+
+    .frame-ip .click_file {
+        width: 850px;
+        height: 170px;
+        border: 1px dotted black;
+        margin-right: 50px;
+        margin-top: 50px;
+        vertical-align: middle;
+    }
+
+    #tb_data {
+        width: 850px;
+    }
+
+    .alert {
+        position: fixed;
+        top: 20px;
+        right: -300px;
+        z-index: 9999;
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        transition: right 0.5s ease-in-out; /* Hiệu ứng khi thay đổi vị trí */
+    }
+
+        .alert.show {
+            right: 20px; /* Hiển thị từ góc phải bên trên */
+        }
+
+    .alert-primary {
+        background-color: #007aff;
+        color: #fff;
+    }
+</style>
+@{
+    ViewBag.Title = "ImportReader";
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+
+<h5>Nhập thông tin từ file</h5>
+<div class="d-flex justify-content-between frame-ip">
+    <div onclick="handleDownload()" class="download-box">
+        <p>Tải tệp mẫu</p>
+        <div>
+            <img src="~/Content/images/icons/IC_Download file.svg" />
+            <span style="color: #0997eb;">Tệp mẫu Excel</span>
+        </div>
+    </div>
+    <div class="click_file d-flex align-items-center flex-column">
+        <input type="file" id="fileInput" accept=".xls,.xlsx" style="display:none;">
+        <img onclick="openFile()" src="~/Content/images/icons/ic_Import.jpg" />
+        <p>Kéo thả tệp vào đây hoặc nhấn để chọn file</p>
+        <div style="margin-bottom: 0; background-color: #f5f6fa" class="d-flex">
+            <img style="width: 30px; height: 30px;" src="~/Content/images/icons/ic_ToastMessage_Info.svg" />
+            <p>Tệp dữ liệu phải có dung lượng không vượt quá 5MB. Vui lòng tải tệp đúng định dạng *.xls, *.xlsx để hệ thống có thể nhận dạng thông tin tệp.</p>
+        </div>
+
+
+        <div style="margin-top: 20px; margin-right: 5px; width: 850px" class="d-flex justify-content-between">
+            <div>
+                <p>
+                    Chọn sheet nhập khẩu
+                    <span style="color: red">*</span>
+                </p>
+                <select id="sheetSelect" class="form-select" style="width: 250px;"></select>
+            </div>
+            <div>
+                <p>
+                    Dòng tiêu đề
+                    <span style="color: red">*</span>
+                </p>
+                <input class="form-control" style="width: 250px" type="number" value="3" />
+            </div>
+        </div>
+
+        <p style="width: 100%;margin-top: 20px">Vui lòng ghép cột dữ liệu yêu cầu với cột tương ứng trên tệp nguồn  <span style="color: red">*</span></p>
+        <table id="tb_data" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" class="text-center align-middle">Dữ liệu yêu cầu</th>
+                    <th scope="col" class="text-center align-middle">Dữ liệu trên tập nguồn</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Họ và tên <span style="color: red">*</span>
+
+                    </td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Lớp/Đơn vị <span style="color: red">*</span></td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Ngày sinh</td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Giới tính</td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Khóa học</td>
+                    <td style="padding: 0"> <select  style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td style="padding: 0"> <select  style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Điện thoại</td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>CCCD</td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Mã sinh viên/Mã thẻ <span style="color: red">*</span></td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+                <tr>
+                    <td>Ngày cấp</td>
+                    <td style="padding: 0"> <select style="width:100%; height: 35.2px" class="form-select list_column"></select></td>
+                </tr>
+            </tbody>
+        </table>
+        <div style="width: 100%" class="d-flex justify-content-end">
+            <button class="btn btn-secondary">Đóng</button>
+            <button onclick="continueImport()" class="btn btn-primary" style="margin-left: 10px">Tiếp tục</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script>
+    function handleDownload() {
+         window.location.href = '@Url.Action("DownloadFileReaderSample", "ChucNangCon")';
+    }
+    function openFile() {
+        document.getElementById('fileInput').click();
+    }
+    function showMessage(content) {
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+        alertDiv.setAttribute('role', 'alert');
+        alertDiv.innerText = content;
+        var resultDiv = document.querySelector('.main-content');
+        resultDiv.appendChild(alertDiv);
+
+        // Tự đóng thông báo sau 3 giây
+        setTimeout(function () {
+            alertDiv.classList.remove('show');
+            setTimeout(function () {
+                resultDiv.removeChild(alertDiv);
+            }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+        }, 3000);
+    }
+    function continueImport() {
+        var fileInput = document.getElementById('fileInput');
+        var file = fileInput.files[0];
+
+        if (!file) {
+            this.showMessage("Chưa chọn file nhập khẩu")
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            var data = event.target.result;
+            var workbook = XLSX.read(data, { type: 'array' });
+            var sheetName = document.getElementById('sheetSelect').value;
+            var worksheet = workbook.Sheets[sheetName];
+            var json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+       
+
+            var payload = json.filter(function (row, index) {
+                return index > 2 && row[9] !== undefined && row[9] !== null && row[9] !== '';
+            }).map(function (row) {
+                return {
+                    
+                    MaDocGia: row[9],
+                    TenDocGia: row[0],
+                    DonVi: row[1],
+                    NgaySinh: row[2]? new Date((row[2] - (25567 + 2)) * 86400 * 1000).toISOString() : null,
+                    GioiTinh: row[3],
+                    DiaChi: row[8],
+                    CCCD: row[7],
+                    DienThoai: row[6],
+                    Email: row[5],
+                    KhoaHoc: row[4],
+                    NgayTao: row[10]? new Date((row[10] - (25567 + 2)) * 86400 * 1000).toISOString() : null
+                };
+            });
+            fetch('/ChucNangCon/ImportReaderByExcel', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showMessage("Dữ liệu đã được nhập khẩu thành công");
+                    } else {
+                        showMessage("Có lỗi xảy ra khi nhập khẩu dữ liệu");
+                    }
+                })
+                .catch(error => {
+                    showMessage("Có lỗi xảy ra khi nhập khẩu dữ liệu");
+                    console.error('Error:', error);
+                });
+        };
+        reader.readAsArrayBuffer(file);
+    }
+    var data = null;
+    document.getElementById('fileInput').addEventListener('change', function (event) {
+        var file = event.target.files[0];
+        var fileName = file.name
+        var show = document.getElementsByClassName('click_file')
+        show.innerText = fileName
+        var allowedExtensions = /(\.xls|\.xlsx)$/i;
+
+        // Check if the selected file has allowed extension
+        if (!allowedExtensions.exec(file.name)) {
+            showMessage("Vui lòng chọn tệp có định dạng *.xls, *.xlsx")
+            document.getElementById('fileInput').value = '';
+            return;
+        }
+        var reader = new FileReader();
+        reader.onload = function (event) {
+            data = new Uint8Array(event.target.result);
+            var workbook = XLSX.read(data, { type: 'array' });
+            var firstSheetName = workbook.SheetNames[0];
+            var worksheet = workbook.Sheets[firstSheetName];
+            var sheetNames = workbook.SheetNames;
+            
+            // Đọc dữ liệu từ dòng thứ 4 (A4, B4, C4,...)
+            var cellAddress = 'A4'; 
+            var cellB4 = 'B4'
+            var cellI4 = 'I4'
+            var desiredCell = worksheet[cellAddress, cellB4, cellI4];
+
+            if (!desiredCell || !desiredCell.v) {
+                showMessage("Tệp không có dữ liệu")
+                return;
+            } 
+            var sheetSelect = document.getElementById('sheetSelect');
+            sheetSelect.innerHTML = '';
+
+            // Thêm options mới từ danh sách sheet
+            sheetNames.forEach(function (name) {
+                var option = document.createElement('option');
+                option.value = name;
+                option.textContent = name;
+                sheetSelect.appendChild(option);
+            });
+            var listColumn = document.querySelectorAll("#tb_data tbody .list_column")
+            var arrayHeader = []
+            var isNullFound = false, cellIndex = 0;
+            while (!isNullFound) {
+                var cellAddress = XLSX.utils.encode_cell({ r: 2, c: cellIndex });
+                var cell = worksheet[cellAddress];
+                if (!cell || cell.v === null || cell.v === "") {
+                    isNullFound = true;
+                } else {
+                    arrayHeader.push(cell.v)
+                    cellIndex++;
+                }
+            }
+            for (var i = 0; i < listColumn.length; i++) {
+                listColumn[i].innerHTML = ''
+                for (var j = 0; j < arrayHeader.length; j++) {
+                    var option = document.createElement('option')
+                    option.textContent = arrayHeader[j]
+                    listColumn[i].appendChild(option)
+                }
+            }
+
+        };
+        reader.readAsArrayBuffer(file);
+
+
+    });
+
+    var headerRowInput = document.querySelector('input[type="number"]');
+    headerRowInput.addEventListener('change', function () {
+        var selectedHeaderRow = parseInt(this.value); 
+        var sheetSelect = document.getElementById('sheetSelect');
+        var selectedSheetName = sheetSelect.value; 
+
+       
+        if (selectedSheetName && selectedHeaderRow > 0) {
+            var workbook = XLSX.read(data, { type: 'array' });
+            var worksheet = workbook.Sheets[selectedSheetName];
+            var isNullFound = false, cellIndex = 0;
+            var listColumn = document.querySelectorAll("#tb_data tbody .list_column")
+            var arrayHeader = []
+            while (!isNullFound) {
+                var cellAddress = XLSX.utils.encode_cell({ r: selectedHeaderRow, c: cellIndex });
+                var cell = worksheet[cellAddress];
+                if (!cell || cell.v === null || cell.v === "") {
+                    isNullFound = true;
+                } else {
+                    arrayHeader.push(cell.v)
+                    cellIndex++;
+                }
+            }
+            for (var i = 0; i < listColumn.length; i++) {
+                listColumn[i].innerHTML = ''
+                for (var j = 0; j < arrayHeader.length; j++) {
+                    var option = document.createElement('option')
+                    option.textContent = arrayHeader[j]
+                    listColumn[i].appendChild(option)
+                }
+            }
+        }
+    });
+
+</script>
+

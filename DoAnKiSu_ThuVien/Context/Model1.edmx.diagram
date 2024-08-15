@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="55dbb99e5738456baec478a1f2a4a996" Name="Diagram1">
+        <EntityTypeShape EntityType="DB_TVModel.BienLai" Width="1.5" PointX="5.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.DocGia" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.KhoaHoc" Width="1.5" PointX="0.75" PointY="17.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.LoaiSach" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.LyDo" Width="1.5" PointX="3" PointY="10.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.NgonNgu" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.NhanVien" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.NXB" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.PhieuMuon" Width="1.5" PointX="8.25" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.Sach" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.TacGia" Width="1.5" PointX="0.75" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.ThongKe" Width="1.5" PointX="5.25" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="DB_TVModel.ViTri" Width="1.5" PointX="0.75" PointY="13.5" IsExpanded="true" />
+        <AssociationConnector Association="DB_TVModel.FK__BienLai__id_doc___4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__BienLai__id_ld__4F7CD00D" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__BienLai__id_sach__5070F446" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__DocGia__id_khoa___5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__PhieuMuon__id_do__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__Sach__id_loai_sa__5441852A" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__Sach__id_ngon_ng__5535A963" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__ThongKe__id_nhan__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__Sach__id_NXB__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__PhieuMuon__id_sa__534D60F1" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__Sach__id_tac_gia__571DF1D5" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__Sach__id_vi_tri__5812160E" ManuallyRouted="false" />
+        <AssociationConnector Association="DB_TVModel.FK__ThongKe__id_sach__59FA5E80" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

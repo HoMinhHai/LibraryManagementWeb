@@ -1,0 +1,974 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>QuanLyMuonTra</title>
+    <style>
+            @@keyframes slideUpFadeIn {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        .container_borrow {
+            height: auto;
+            margin-top: 20px;
+            padding: 0;
+            margin-bottom: 15px;
+            justify-content: space-between;
+        }
+
+            .container_borrow #reader_img {
+                width: 162px;
+                height: 180px;
+                display: block;
+            }
+
+            .container_borrow .information {
+                width: 400px;
+            }
+
+            .container_borrow .number_books {
+                width: 350px;
+            }
+
+        .number_books .item_number .bor_digit {
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+            font-size: 25px;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .number_books .group-item {
+            margin-bottom: 50px;
+        }
+
+            .number_books .group-item .item_number .item_in {
+                display: flex;
+                align-items: center;
+                height: 50px;
+                width: 90px;
+                justify-content: center;
+                flex-direction: column
+            }
+        /*  Css for alert*/
+        /* CSS cho thông báo */
+        .alert {
+            position: fixed;
+            top: 20px;
+            right: -300px; /* Bắt đầu ẩn ngoài màn hình */
+            z-index: 9999;
+            padding: 20px;
+            background-color: #f44336; /* Màu nền của thông báo */
+            color: white;
+            transition: right 0.5s ease-in-out; /* Hiệu ứng khi thay đổi vị trí */
+        }
+
+            .alert.show {
+                right: 20px; /* Hiển thị từ góc phải bên trên */
+            }
+
+        .alert-primary {
+            background-color: #007aff;
+            color: #fff;
+        }
+
+        #icon-action-delete {
+            width: 25px;
+            height: 25px;
+            display: block;
+            margin: auto;
+        }
+
+        #custom-alert {
+            position: fixed;
+            z-index: 1005;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Màu nền mờ */
+        }
+        /*
+
+            /* CSS cho custom-alert */
+        .custom-alert-new {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            transform: translateX(-50%);
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+            .custom-alert.show {
+                bottom: 50%;
+                opacity: 1;
+            }
+
+            .custom-alert.hide {
+                bottom: 0;
+                opacity: 0;
+            }
+
+        /* CSS cho nút đóng */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 20px;
+        }
+        .fade-in-up {
+            animation: slideUpFadeIn 1s ease forwards;
+        }
+
+        .fade-out-down {
+            animation: slideDownFadeOut 1s ease forwards;
+        }
+
+        .custom-alert-content-new {
+            background-color: white;
+            margin: 15% auto; /* Định vị ở giữa màn hình */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Độ rộng của alert */
+            height: 450px;
+            text-align: center;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            animation: slideUpFadeIn 1s ease forwards;
+        }
+        @@keyframes slideDownFadeOut {
+            from {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+        }
+
+
+        .close-btn {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            .close-btn:hover,
+            .close-btn:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+        #tb_books{
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    @model DoAnKiSu_ThuVien.Models.DocGia
+    <div class="d-flex container container_borrow">
+        <img id="reader_img" src="~/Content/images/avatars/avatar_reader.jpg" />
+        <div class="information">
+
+            <div class="d-flex justify-content-between">
+                <input autofocus style="width: 200px" id="input_doc" name="inputDoc" type="text" class="form-control" placeholder="Quét mã độc giả" />
+
+            </div>
+
+
+            <div class="private_info">
+                <div class="d-flex justify-content-between">
+                    <h6 id="name_rd">TenDocGia</h6>
+                    <p id="state_rd">TrangThai</p>
+                </div>
+                <p id="title_rd">Chức vụ</p>
+               
+                <div class="d-flex justify-content-between">
+                    <b>Đơn vị</b>
+                    <p id="donvi"></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <b>Địa chỉ</b>
+                    <p id="diachi"> </p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <b>Khóa học</b>
+                    <p id="khoahoc"></p>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <b>Email</b>
+                    <p id="email"></p>
+                    <b>Điện thoại</b>
+                    <p id="dienthoai"></p>
+                </div>
+
+            </div>
+        </div>
+        <div class="number_books">
+            <div class="d-flex justify-content-between group-item">
+                <div class="d-flex align-items-center item_number">
+                    <div id="dangmuons" class="bor_digit" style="background-color: green">0</div>
+                    <div class="item_in">
+                        <b>Cuốn</b>
+                        <p>Đang mượn</p>
+                    </div>
+                </div>
+                <div class="d-flex align-items-center item_number">
+                    <div id="quahans" class="bor_digit" style="background-color: #f8ac59">0</div>
+                    <div class="item_in">
+                        <b>Cuốn</b>
+                        <p>Quá hạn</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="d-flex align-items-center justify-content-around container input_search_book">
+        <h6>Thông tin tài liệu đang mượn</h6>
+        <input onkeydown="handleReturnDocument(event)" disabled style="width: 200px" id="inputBook" name="inputBook" type="text" class="form-control" placeholder="Quét để trả tài liệu" />
+        <button id="btn_brr" disabled onclick="newBorrowBook()" type="button" class="btn btn-primary">Mượn tài liệu</button>
+        @Html.ActionLink("Xuất file excel", "ExportToExcel", "ChucNangCon")
+        @*<button onClick="exportFile()" class="btn btn-secondary">Xuất excel</button>*@
+    </div>
+    <table id="tb_books" class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col" class="text-center align-middle">Mã tài liệu</th>
+                <th scope="col" class="text-center align-middle">Mô tả</th>
+                <th scope="col" class="text-center align-middle">Tình trạng</th>
+                <th scope="col" class="text-center align-middle">Ngày mượn</th>
+                <th scope="col" class="text-center align-middle">Hạn trả</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</body>
+</html>
+<script>
+    const inputReader = document.getElementById('input_doc');
+    const inputDocument = document.getElementById('inputBook');
+    var resultDiv = document.querySelector('.main-content');
+    var confirmDialog;
+    var confirmSave;
+    inputReader.addEventListener('keypress', function (event) {
+        if (event.key === 'Enter') {
+            const input = event.target.value.trim();
+            fetch('/ChucNangCon/Search', {
+                method: 'POST', // Sử dụng phương thức POST để truyền dữ liệu
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ inputDoc: input }) // Chuyển mã vạch thành JSON
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displaySearch(data, input);
+                   
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    });
+    function loadListBorrowBook(input) {
+       
+        fetch('/TaiLieu/GetListBookBorrow', {
+            method: 'POST', // Sử dụng phương thức POST để truyền dữ liệu
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ maDocGia: input }) // Chuyển mã vạch thành JSON
+        })
+            .then(response => response.json())
+            .then(data => {
+                this.displayDataBookToTable(data);
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    function displayDataBookToTable(data) {
+        var tbody = document.querySelector('#tb_books tbody');
+        tbody.innerHTML = '';
+        if (data.ds && data.ds.length > 0) {
+            dangmuon = 0;
+            quahan = 0;
+            data.ds.forEach(item => {
+                if (item.trangThai == "Đang cho mượn")
+                    dangmuon++;
+                if (item.trangThai == "Quá hạn")
+                    quahan++;
+                var row = document.createElement('tr');
+                var maDKCBCell = document.createElement('td');
+                maDKCBCell.textContent = item.maDKCB;
+                var tenTLCell = document.createElement('td');
+                tenTLCell.textContent = item.tenTL;
+                var trangThaiCell = document.createElement('td');
+                trangThaiCell.textContent = item.trangThai;
+                var ngayHienTaiCell = document.createElement('td');
+                ngayHienTaiCell.textContent = item.ngayMuon;
+                var hanTraCell = document.createElement('td');
+                hanTraCell.textContent = item.hanTra;
+                row.appendChild(maDKCBCell);
+                row.appendChild(tenTLCell);
+                row.appendChild(trangThaiCell);
+                row.appendChild(ngayHienTaiCell);
+                row.appendChild(hanTraCell);
+                tbody.appendChild(row);
+            })
+            var dangmuonNumber = document.getElementById("dangmuons")
+            var quahanNumber = document.getElementById('quahans')
+            dangmuonNumber.innerText = dangmuon
+            quahanNumber.innerText = quahan
+        }
+    }
+    function checkExists(bookCode) {
+        var table = document.querySelector('#tb_books_borrow');
+        var rows = table.getElementsByTagName('tr');
+        for (let i = 1; i < rows.length; i++) {
+            const firstCell = rows[i].getElementsByTagName('td')[0];
+            if (firstCell) {
+                const cellContent = firstCell.innerText;
+                if (bookCode === cellContent) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+                    alertDiv.setAttribute('role', 'alert');
+                    alertDiv.innerHTML = 'Mã tài liệu đã có!';
+                    var resultDiv = document.querySelector('.main-content');
+                    resultDiv.appendChild(alertDiv);
+
+                    // Tự đóng thông báo sau 3 giây
+                    setTimeout(function () {
+                        alertDiv.classList.remove('show');
+                        setTimeout(function () {
+                            resultDiv.removeChild(alertDiv);
+                        }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+                    }, 3000);
+                    return false;
+                }
+
+            }
+
+        }
+        return true;
+    }
+    function displayToTable(data) {
+        if (data.errCode == 3) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerText = 'Chưa nhập thông tin độc giả';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        } 
+        else if (data.errCode && data.errCode == 1) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Tài liệu đang được cho mượn!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else if (data.errCode && data.errCode == 2) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Tài liệu ở trạng thái không lưu thông!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else if (!data.error) {
+            if (checkExists(data.maDKCB) === true) {
+                inputDocument.value = "";
+                var tbody = document.querySelector('#tb_books tbody');
+                var row = document.createElement('tr');
+                row.setAttribute('id', data.maDKCB);
+                var maDKCBCell = document.createElement('td');
+                maDKCBCell.textContent = data.maDKCB;
+                var tenTLCell = document.createElement('td');
+                tenTLCell.textContent = data.tenTL;
+                var trangThaiCell = document.createElement('td');
+                trangThaiCell.textContent = "Đang cho mượn";
+                var ngayHienTaiCell = document.createElement('td');
+                var currentDate = new Date().toLocaleDateString('vi-VN');
+                ngayHienTaiCell.textContent = currentDate;
+                var hanTraCell = document.createElement('td');
+                hanTraCell.textContent = data.hanTra;
+                row.appendChild(maDKCBCell);
+                row.appendChild(tenTLCell);
+                row.appendChild(trangThaiCell);
+                row.appendChild(ngayHienTaiCell);
+                row.appendChild(hanTraCell);
+                tbody.appendChild(row);
+            }
+        }
+        else {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Không tìm thấy tài liệu!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+    }
+    function displaySearch(data, maDG) {
+        var tbody = document.querySelector('#tb_books tbody');
+        tbody.innerHTML = '';
+         if (!data.error) {
+            document.getElementById("name_rd").innerText = data.TenDocGia;
+            document.getElementById("state_rd").innerText = data.TrangThai;
+           
+          
+             document.getElementById("title_rd").innerText = data.ChucVu;
+             document.getElementById("donvi").innerText = data.DonVi;
+             document.getElementById("dienthoai").innerText = data.DienThoai;
+             document.getElementById("diachi").innerText = data.DiaChi;
+             document.getElementById("khoahoc").innerText = data.KhoaHoc;
+             document.getElementById("email").innerText = data.Email;
+            document.getElementById('inputBook').focus();
+             document.getElementById('inputBook').disabled = false;
+             document.getElementById('btn_brr').disabled = false;
+            this.loadListBorrowBook(maDG);
+        } else {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Không tìm thấy độc giả';
+             var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+
+        }
+    }
+    function displayToTableBorrow(data) {
+        if (data.errCode == 3) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerText = 'Chưa nhập thông tin độc giả';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else if (data.errCode && data.errCode == 1) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Tài liệu đang được cho mượn!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else if (data.errCode && data.errCode == 2) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Tài liệu ở trạng thái không lưu thông!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else if (!data.error) {
+            if (checkExists(data.maDKCB) === true) {
+                document.getElementById('inputBookBorrow').value = ''
+                var tbody = document.querySelector('#tb_books_borrow tbody');
+                var row = document.createElement('tr');
+                row.setAttribute('id', data.maDKCB);
+                var maDKCBCell = document.createElement('td');
+                maDKCBCell.textContent = data.maDKCB;
+                var tenTLCell = document.createElement('td');
+                tenTLCell.textContent = data.tenTL;
+                var trangThaiCell = document.createElement('td');
+                trangThaiCell.textContent = "Đang cho mượn";
+                var ngayHienTaiCell = document.createElement('td');
+                var currentDate = new Date().toLocaleDateString('vi-VN');
+                ngayHienTaiCell.textContent = currentDate;
+                var hanTraCell = document.createElement('td');
+                hanTraCell.textContent = data.hanTra;
+                row.appendChild(maDKCBCell);
+                row.appendChild(tenTLCell);
+                row.appendChild(trangThaiCell);
+                row.appendChild(ngayHienTaiCell);
+                row.appendChild(hanTraCell);
+                tbody.appendChild(row);
+            }
+        }
+        else {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Không tìm thấy tài liệu!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+    }
+    function handleFetchApi(event)
+    {
+        if (event.key === 'Enter')
+        {
+            const input = event.target.value.trim();
+            fetch('/ChucNangCon/SearchBook', {
+                method: 'POST', // Sử dụng phương thức POST để truyền dữ liệu
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ inputDoc: input })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    displayToTableBorrow(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+    function newBorrowBook() {
+        confirmDialog = document.createElement('div');
+        confirmDialog.innerHTML = `<div id="custom-alert" class="custom-alert">
+     <div class="custom-alert-content-new fade-in-up">
+         <span class="close-btn" onclick="closeCustomAlert()">&times;</span>
+         <div class="d-flex align-items-center justify-content-around container input_search_book">
+    <h6>Danh sách tài liệu</h6>
+    <input onkeydown = "handleFetchApi(event)" style="width: 200px" id="inputBookBorrow" name="inputBookBorrow" type="text" class="form-control" placeholder="Quét mã tài liệu" />
+    <button onclick=saveNote() type="button" class="btn btn-primary">Lưu phiếu mượn</button>
+</div>
+<table style= "margin-top: 10px;" id="tb_books_borrow" class="table table-bordered">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center align-middle">Mã tài liệu</th>
+            <th scope="col" class="text-center align-middle">Mô tả</th>
+            <th scope="col" class="text-center align-middle">Tình trạng</th>
+            <th scope="col" class="text-center align-middle">Ngày mượn</th>
+            <th scope="col" class="text-center align-middle">Hạn trả</th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+
+        
+     </div>
+ </div >`;
+        var resultDiv = document.querySelector('.main-content')
+        resultDiv.appendChild(confirmDialog);
+        setTimeout(() => {
+            document.getElementById('custom-alert').classList.add('show');
+        }, 10);
+    }
+    function saveNote() {
+        var table = document.getElementById('tb_books_borrow');
+        if (table.rows.length < 2) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerText = 'Chưa nhập tài liệu';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else {
+            this.saveData();
+        }
+
+    }
+    function exportFile() {
+       
+    }
+    function closeCustomAlert() {
+        const alertBox = document.getElementById('custom-alert');
+        alertBox.classList.remove('show');
+        alertBox.classList.add('hide');
+
+        // Đợi cho đến khi hiệu ứng kết thúc
+        setTimeout(() => {
+            if (alertBox) {
+                alertBox.parentNode.removeChild(alertBox.parentNode);
+            }
+        }, 500); // Thời gian này phải khớp với thời gian chuyển tiếp trong CSS
+    }
+    function deleteBook() {
+        confirmDialog = document.createElement('div');
+        confirmDialog.innerHTML = `<div id="custom-alert" class="custom-alert">
+            <div class="custom-alert-content">
+                <span class="close-btn" onclick="closeCustomAlert()">&times;</span>
+                <p>Xác nhận xóa ?</p>
+                <button class = "btn btn-primary" onclick = "deleteRow(this)">Xóa</button>
+                <button onclick="closeCustomAlert()" class="btn btn-secondary">Hủy bỏ </button>
+            </div>
+        </div >`;
+        resultDiv.appendChild(confirmDialog);
+    }
+
+    function deleteRow(btn) {
+
+    }
+    function closeDialog() {
+        resultDiv = document.querySelector('.main-content');
+
+        resultDiv.removeChild(confirmSave);
+        confirmSave = null;
+    }
+    // Hàm để ẩn hộp thoại
+    function closeCustomAlert() {
+        resultDiv.removeChild(confirmDialog);
+        confirmDialog = null;
+    }
+    async function saveData() {
+        ///collect Data
+        var dsTaiLieu = []; 
+
+        var table = document.querySelector('#tb_books_borrow');
+        var rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+            const firstCell = rows[i].getElementsByTagName('td')[0];
+            if (firstCell) {
+                const cellContent = firstCell.innerText;
+                dsTaiLieu.push(cellContent); 
+            }
+        }
+        //
+
+        const params = {
+            method: 'POST', 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ dsTaiLieu: dsTaiLieu })
+        };
+        const url = `/ChucNangCon/SaveBookBorrowNote`;
+        const response = await fetch(url, params);
+        const data = await response.json();
+        if (data.errCode == 1)
+        {
+            this.closeCustomAlert();
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Phiên đăng nhập đã hết hạn!';
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        if (data.errCode == 2)
+        {
+            this.closeCustomAlert();
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Chưa nhập thông tin độc giả!';
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        if (data.errCode == 3) {
+            this.closeCustomAlert();
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Chưa nhập tài liệu!';
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        if (data.errCode == 4) {
+            this.closeCustomAlert();
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = data.message;
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        if (data.message == "Thành công") {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Lưu phiếu mượn thành công!';
+
+            resultDiv.appendChild(alertDiv);
+            this.updateMainTable();
+            this.closeCustomAlert();
+            
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+            
+    }
+    function updateMainTable() {
+        var table = document.querySelector('#tb_books_borrow');
+        var tbody = document.querySelector('#tb_books tbody');
+        var rows = table.getElementsByTagName('tr');
+
+        for (let i = 1; i < rows.length; i++) {
+            const firstCell = rows[i].getElementsByTagName('td')[0];
+            const secondCell = rows[i].getElementsByTagName('td')[1];
+            const thirdCell = rows[i].getElementsByTagName('td')[2];
+            const fourthCell = rows[i].getElementsByTagName('td')[3];
+            const fifthCell = rows[i].getElementsByTagName('td')[4];
+
+
+
+            var row = document.createElement('tr');
+            var maDKCBCell = document.createElement('td');
+            maDKCBCell.textContent = firstCell.innerText;
+            var tenTLCell = document.createElement('td');
+            tenTLCell.textContent = secondCell.innerText;
+            var trangThaiCell = document.createElement('td');
+            trangThaiCell.textContent = thirdCell.innerText;
+            var ngayHienTaiCell = document.createElement('td');
+            ngayHienTaiCell.textContent = fourthCell.innerText;
+            var hanTraCell = document.createElement('td');
+            hanTraCell.textContent = fifthCell.innerText;
+            row.appendChild(maDKCBCell);
+            row.appendChild(tenTLCell);
+            row.appendChild(trangThaiCell);
+            row.appendChild(ngayHienTaiCell);
+            row.appendChild(hanTraCell);
+            tbody.appendChild(row);
+        }
+            
+        
+    }
+    function removeDivWithEffect() {
+        var div = document.getElementById('animatedDiv');
+        if (div) {
+            div.classList.remove('fade-in-up');
+            div.classList.add('fade-out-down');
+            div.addEventListener('animationend', function () {
+                div.remove();
+            });
+        }
+    }
+
+    function handleReturnDocument(event)
+    {
+        if (event.key === "Enter")
+        {
+            const input = event.target.value.trim();
+            if (input == null) {
+                const alertDiv = document.createElement('div');
+                alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+                alertDiv.setAttribute('role', 'alert');
+                alertDiv.innerHTML = 'Chưa nhập tài liệu trả!';
+                var resultDiv = document.querySelector('.main-content');
+                resultDiv.appendChild(alertDiv);
+
+                // Tự đóng thông báo sau 3 giây
+                setTimeout(function () {
+                    alertDiv.classList.remove('show');
+                    setTimeout(function () {
+                        resultDiv.removeChild(alertDiv);
+                    }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+                }, 3000);
+            }
+            fetch('/TaiLieu/ReturnDocument', {
+                method: 'POST', // Sử dụng phương thức POST để truyền dữ liệu
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ maTaiLieu: input }) // Chuyển mã vạch thành JSON
+            })
+                .then(response => response.json())
+                .then(data => {
+                    showResult(data);
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    }
+    function showResult(data) {
+        if (data.status) {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Trả tài liệu thành công!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+            this.loadListBorrowBook(data.maDocGia);
+        }
+        else if (data.error == "Không tìm thấy độc giả") {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Không tìm thấy độc giả!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else if (data.error == "Chưa nhập mã tài liệu") {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Chưa nhập tài liệu trả!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else {
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'fade', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerHTML = 'Tài liệu trả không hợp lệ!';
+            var resultDiv = document.querySelector('.main-content');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+    }
+
+</script>
+

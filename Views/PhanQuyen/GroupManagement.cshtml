@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "GroupManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link  rel="stylesheet" href="~/Content/css/GroupManagement.css"/>
+<div style="background-color: #1877f1; height:60px;width: 100%;color: white; display: flex; align-items: center ;font-size: 20px; padding-left: 20px">
+    Quản lý quyền truy cập
+</div>
+<div class="horizontal-container">
+    <p>Chọn nhóm người dùng</p>
+@model List<DoAnKiSu_ThuVien.Models.NhomNguoiDung>
+<select class="form-select" aria-label="Default select example">
+    <option selected disabled>Chọn nhóm người dùng</option>
+    @foreach (var nhom in Model)
+    {
+        <option value="@nhom.MaNhom">@nhom.TenNhom</option>
+    }
+</select>
+</div>
+
+<div style="background-color: #888888; height: 50px; width: 100%; position: fixed; bottom: 0">
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("AddAction", "PhanQuyen")'">Thêm</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("GroupManagement", "PhanQuyen")'">Quản lý nhóm</button>
+    <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("DeleteGroup", "PhanQuyen")'">Quản lý nhóm</button>
+</div>
+</div>
+

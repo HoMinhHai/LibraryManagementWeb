@@ -1,0 +1,73 @@
+﻿
+.container .container #myCarousel {
+    margin-top: 20px;
+}
+
+.intro_books {
+    margin-top: 20px;
+}
+
+    .intro_books #title_new {
+        margin-bottom: 15px;
+    }
+
+    .intro_books .new_books ul li {
+        list-style-type: none;
+        margin-right: 20px;
+        font-size: 20px;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+.item_selected {
+    background-color: #007aff;
+    color: #fff;
+}
+
+.item_hover {
+    color: #007aff;
+}
+
+.intro_books .new_books .list_type_doc {
+    padding-left: 0;
+    border-bottom: 0.1px groove #DDDDDD;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+}
+
+#btn-detail {
+    background-color: #007aff;
+    border: none;
+    margin-right: 20px;
+}
+
+.recommend_books {
+    padding-right: 10px;
+    padding-right: 10px;
+    margin-bottom: 15px
+}
+.pagination-homepage {
+    margin: auto;
+    display: flex;
+    list-style-type: none;
+    text-align: center;
+    width: fit-content;
+}
+.pagination-homepage li {
+    color: black;
+    float: left;
+    padding: 8px 16px;
+
+    cursor: pointer;
+    transition: background-color .3s;
+}
+
+    /* Style the active/current link */
+    .pagination-homepage li.active {
+        background-color: dodgerblue;
+        color: white;
+    }
+
+    .pagination-homepage li:hover:not(.active) {
+        background-color: #ddd;
+    }

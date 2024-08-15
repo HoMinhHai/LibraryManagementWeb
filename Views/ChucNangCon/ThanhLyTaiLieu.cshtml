@@ -1,0 +1,55 @@
+﻿@model IEnumerable<DoAnKiSu_ThuVien.Models.TaiLieu>
+
+@{
+    ViewBag.Title = "ThanhLyTaiLieu";
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+
+<h2>ThanhLyTaiLieu</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TenTaiLieu)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KyHieuPhanLoai)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.NgayNhap)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ChuDe1.TenChuDe)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LoaiTaiLieu1.TenLoai)
+        </th>
+        <th>Thanh Lý</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TenTaiLieu)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KyHieuPhanLoai)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NgayNhap)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ChuDe1.TenChuDe)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LoaiTaiLieu1.TenLoai)
+        </td>
+        <td>
+            @Html.ActionLink("Thanh Lý", "Delete", new { id = item.ID_TL })
+
+        </td>
+    </tr>
+}
+
+</table>

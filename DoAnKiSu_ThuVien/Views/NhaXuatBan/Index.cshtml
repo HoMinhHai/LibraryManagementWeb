@@ -1,0 +1,46 @@
+﻿@model IEnumerable<DoAnKiSu_ThuVien.Context.NXB>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ten_NXB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.dia_chi)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SDT)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ten_NXB)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.dia_chi)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SDT)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_NXB }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_NXB }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_NXB })
+        </td>
+    </tr>
+}
+
+</table>

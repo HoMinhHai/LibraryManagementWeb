@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "QuanLyPhanQuyen";
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+<style>
+    .frame-function{
+        margin-bottom: 20px
+    }
+    .cb-function{
+        transform: scale(1.5)
+    }
+    .text-function{
+        margin-bottom: 0;
+        margin-left: 20px
+    }
+    .alert {
+        position: fixed;
+        top: 20px;
+        right: -300px;
+        z-index: 9999;
+        padding: 20px;
+        background-color: #f44336;
+        color: white;
+        transition: right 0.5s ease-in-out; /* Hiệu ứng khi thay đổi vị trí */
+    }
+
+        .alert.show {
+            right: 20px; /* Hiển thị từ góc phải bên trên */
+        }
+
+    .alert-primary {
+        background-color: #007aff;
+        color: #fff;
+    }
+    #check-all {
+        transform: scale(1.5);
+        margin-right: 20px
+    }
+</style>
+<div style="background-color: #1877f1; height:60px;width: 100%;color: white; display: flex; align-items: center ;font-size: 16px; padding-left: 20px">
+    Quản lý phân quyền
+</div>
+
+<div style="margin-top: 20px;padding-bottom: 20px; border-bottom: 0.2px dotted gray;" class="d-flex justify-content-around container">
+    
+    <b style="width: 200px">Nhóm người dùng</b>
+    <select id="cbb_gr" style="width: 400px" class="form-select"></select>
+    <button onclick="saveData()" class="btn btn-primary"> Lưu</button>
+</div>
+<div class="d-flex" style="margin-top: 10px; padding: 10px; border-bottom: 0.2px dotted gray">
+    <input id="check-all" onclick="setAllInput()" type="checkbox" />
+    <b>Chọn/Bỏ chọn tất cả</b>
+</div>
+<div class="container function_list " style="margin-top: 30px">
+    
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        loadFunctionByGroup("Chuyên viên")
+        fetch('/PhanQuyen/getAllGroupUser', {
+            method: 'POST',
+        })
+            .then(response => response.json())
+            .then(data => {
+                data.lst.forEach(item => {
+                    const option = document.createElement('option')
+                    option.textContent = item
+                    const selectbox = document.getElementById('cbb_gr')
+                    selectbox.appendChild(option)
+                })
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    document.getElementById('cbb_gr').addEventListener('change', function() {
+        const selectedGroup = this.value;
+        loadFunctionByGroup(selectedGroup)
+    });
+    function loadFunctionByGroup(group) {
+        fetch('/System/GetAllFunctionByGroup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tennhom: group })
+        })
+            .then(response => response.json())
+            .then(data => {
+                const body = document.querySelector('.function_list')
+                body.innerHTML = ''
+                data.forEach(item => {
+
+                    var row = document.createElement('div');
+                    row.classList.add('frame-function')
+                    row.classList.add('d-flex')
+                    row.classList.add('align-items-center')
+                    
+
+                    var input = document.createElement('input')
+                    input.type = 'checkbox'
+                    input.classList.add('cb-function')
+                    input.checked = item.coQuyen
+                    row.appendChild(input)
+
+
+                    var text = document.createElement('p')
+                    text.classList.add('text-function')
+                    text.textContent = item.tenChucNang
+                    row.appendChild(text)
+
+                    body.appendChild(row);
+                })
+            })
+            .catch(error => console.error('Error:', error));
+    }
+    function saveData() {
+        const parentDiv = document.querySelector('.function_list')
+        const childDivs = parentDiv.querySelectorAll('div');
+        const results = [];
+
+        childDivs.forEach(div => {
+            const checkbox = div.querySelector('input[type="checkbox"]');
+            const label = div.querySelector('p');
+            if (checkbox && label) {
+                results.push({
+                    tenChucNang: label.textContent,
+                    coQuyen: checkbox.checked
+                });
+            }
+        });
+        console.log(results)
+        var tennhom = document.getElementById('cbb_gr').value
+        fetch('/PhanQuyen/SaveRoleByGroup', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ tenNhom: tennhom, ds: results })
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message)
+                    showMessage("Lưu dữ liệu thành công")
+            })
+
+            .catch(error => console.error('Error:', error));
+    }
+    function showMessage(content) {
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+        alertDiv.setAttribute('role', 'alert');
+        alertDiv.innerText = content;
+        var resultDiv = document.querySelector('.main-content');
+        resultDiv.appendChild(alertDiv);
+
+        // Tự đóng thông báo sau 3 giây
+        setTimeout(function () {
+            alertDiv.classList.remove('show');
+            setTimeout(function () {
+                resultDiv.removeChild(alertDiv);
+            }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+        }, 3000);
+    }
+    function setAllInput() {
+        var state = document.getElementById('check-all').checked
+        var listcheckFunc = document.querySelectorAll('.cb-function')
+        if (state) {
+
+            listcheckFunc.forEach(function (checkbox) {
+                checkbox.checked = true;
+            });
+        }
+        else {
+            listcheckFunc.forEach(function (checkbox) {
+                checkbox.checked = false;
+            });
+        }
+    }
+</script>

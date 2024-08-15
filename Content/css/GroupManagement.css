@@ -1,0 +1,9 @@
+﻿.horizontal-container {
+    display: flex; /* Sử dụng flexbox */
+    align-items: center; /* Căn giữa các phần tử theo chiều dọc */
+}
+
+   
+    .horizontal-container p, .horizontal-container select {
+        
+    }

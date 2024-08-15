@@ -1,0 +1,234 @@
+﻿
+@{
+    ViewBag.Title = "ThemNguoiDung";
+    Layout = "~/Views/Shared/_Layout_System.cshtml";
+}
+<style>
+    #confirmDialog {
+        display: none; /* Ẩn hộp thoại ban đầu */
+        position: fixed;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        border: 1px solid #ccc;
+        padding: 20px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+        #confirmDialog .dialog-buttons {
+            text-align: right;
+        }
+
+        #confirmDialog button {
+            margin-left: 10px;
+        }
+
+    #overlay {
+        display: none; /* Ẩn lớp phủ ban đầu */
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 500;
+    }
+    .alert {
+        position: fixed;
+        top: 20px;
+        right: -300px; /* Bắt đầu ẩn ngoài màn hình */
+        z-index: 9999;
+        padding: 20px;
+        background-color: #f44336; /* Màu nền của thông báo */
+        color: white;
+        transition: right 0.5s ease-in-out; /* Hiệu ứng khi thay đổi vị trí */
+    }
+
+        .alert.show {
+            right: 20px; /* Hiển thị từ góc phải bên trên */
+        }
+
+    .alert-primary {
+        background-color: #007aff;
+        color: #fff;
+    }
+
+    .group-input {
+        margin-bottom: 10px;
+        padding: 0;
+    }
+</style>
+<div class="container">
+    <h4 style="color: dodgerblue">Thông tin tài khoản</h4>
+    <div class="row d-flex align-items-center group-input">
+        <b class="col-3">Mật khẩu</b>
+        <input id="input_psw" required type="password" class="form-control col-9" placeholder="Nhập mật khẩu" />
+    </div>
+    <div class="row d-flex align-items-center group-input">
+        <b class="col-3">Nhóm người dùng</b>
+        <select id="cbb_gr" class="col-9 form-select" aria-label="Default select example">
+        </select>
+
+    </div>
+    <div class="row d-flex align-items-center group-input">
+        <b class="col-3">Trạng thái</b>
+        <select id="cbb_state" class="col-3 form-select" aria-label="Default select example">
+            <option selected>Hoạt động</option>
+            <option value="1">Bị khóa</option>
+        </select>
+        <b class="col-3">Nhân viên</b>
+        <select id="cbb_staff" class="col-3 form-select" aria-label="Default select example">
+        </select>
+    </div>
+</div>
+<div style="background-color: #888888; height: 50px; width: 100%; position: fixed; bottom: 0; padding: 10px;">
+    <button disabled id="btn_submit" type="button" class="btn btn-primary" onclick="handleAddNew()">Thêm</button>
+</div>
+<div id="overlay"></div>
+<div id="confirmDialog">
+    <p>Xác nhận tạo tài khoản ?</p>
+    <div class="dialog-buttons">
+        <button class="btn btn-primary" onclick="confirmSave()">Lưu</button>
+        <button class="btn btn-secondary" onclick="cancelSave()">Hủy</button>
+    </div>
+</div>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        fetch('/PhanQuyen/getAllGroupUser', {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(data => {
+
+                data.lst.forEach(item => {
+                    var row = document.createElement('option');
+                    row.textContent = item;
+                    var tbody = document.querySelector('#cbb_gr');
+                    tbody.appendChild(row);
+                })
+
+            })
+            .catch(error => console.error('Error:', error));
+        fetch('/PhanQuyen/getEmployeeHaveNotAccount', {
+            method: 'POST'
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.length == 0) {
+                    const alertDiv = document.createElement('div');
+                    alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+                    alertDiv.setAttribute('role', 'alert');
+                    alertDiv.innerText = 'Tất cả nhân viên đều đã có tài khoản';
+                    var resultDiv = document.querySelector('.header .header-topbar');
+                    resultDiv.appendChild(alertDiv);
+
+                    // Tự đóng thông báo sau 3 giây
+                    setTimeout(function () {
+                        alertDiv.classList.remove('show');
+                        setTimeout(function () {
+                            resultDiv.removeChild(alertDiv);
+                        }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+                    }, 3000);
+                }
+                else {
+                    document.getElementById('btn_submit').disabled = false;
+                    data.forEach(item => {
+                        var row = document.createElement('option');
+                        row.textContent = item.EmployeeId + " - " + item.EmployeeName;
+                        var tbody = document.querySelector('#cbb_staff');
+                        tbody.appendChild(row);
+                    })
+                }
+               
+
+            })
+            .catch(error => console.error('Error:', error));
+    });
+    function handleAddNew() {
+        var pass = document.querySelector('#input_psw');
+        if (pass.value === '') {
+            pass.focus();
+            const alertDiv = document.createElement('div');
+            alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+            alertDiv.setAttribute('role', 'alert');
+            alertDiv.innerText = 'Chưa nhập mật khẩu';
+            var resultDiv = document.querySelector('.header .header-topbar');
+            resultDiv.appendChild(alertDiv);
+
+            // Tự đóng thông báo sau 3 giây
+            setTimeout(function () {
+                alertDiv.classList.remove('show');
+                setTimeout(function () {
+                    resultDiv.removeChild(alertDiv);
+                }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+            }, 3000);
+        }
+        else {
+            this.showConfirmDialog();
+        }
+
+    }
+    function showConfirmDialog() {
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('confirmDialog').style.display = 'block';
+    }
+    function hideConfirmDialog() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('confirmDialog').style.display = 'none';
+    }
+
+    function confirmSave() {
+        hideConfirmDialog();
+        const psw = document.getElementById('input_psw').value
+        const group = document.getElementById('cbb_gr').value
+        const state = document.getElementById('cbb_state').value
+        const staff = document.getElementById('cbb_staff').value
+        var dsTaiLieu = [];
+        dsTaiLieu.push(psw);
+        dsTaiLieu.push(group);
+        dsTaiLieu.push(state);
+        dsTaiLieu.push(staff);
+
+        fetch('/ChucNangCon/CreateAccount', {
+            method: 'POST', // Sử dụng phương thức POST để truyền dữ liệu
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ data: dsTaiLieu }) // Chuyển mã vạch thành JSON
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.errCode == 0) {
+                    this.showMessage("Tạo tài khoản thành công");
+                }
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    function cancelSave() {
+        hideConfirmDialog();
+        console.log('Hủy lưu');
+    }
+    function showMessage(content)
+    {
+        const alertDiv = document.createElement('div');
+        alertDiv.classList.add('alert', 'alert-primary', 'slide-in-top', 'show');
+        alertDiv.setAttribute('role', 'alert');
+        alertDiv.innerText = content;
+        var resultDiv = document.querySelector('.header .header-topbar');
+        resultDiv.appendChild(alertDiv);
+
+        // Tự đóng thông báo sau 3 giây
+        setTimeout(function () {
+            alertDiv.classList.remove('show');
+            setTimeout(function () {
+                resultDiv.removeChild(alertDiv);
+            }, 500); // Chờ hiệu ứng kết thúc trước khi xóa khỏi DOM
+        }, 3000);
+    }
+</script>
+
+
