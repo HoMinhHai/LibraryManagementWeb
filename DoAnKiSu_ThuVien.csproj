@@ -320,6 +320,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Content\admin\dist\css\adminlte.css" />
     <Content Include="Content\admin\dist\css\adminlte.min.css" />
     <Content Include="Content\admin\dist\css\alt\adminlte.components.css" />
